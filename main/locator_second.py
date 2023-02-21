@@ -5,12 +5,10 @@ import os
 from typing import List
 from haversine import haversine
 from geopy.geocoders import Nominatim
-from geopy.extra.rate_limiter import RateLimiter
 import reader_second
 
 
 geolocator = Nominatim(user_agent="compicraft")
-geocode = RateLimiter(geolocator.geocode, min_delay_seconds=0.00001)
 
 
 def locator_second(films: List[tuple], start_point: tuple[str]) -> List[tuple]:
