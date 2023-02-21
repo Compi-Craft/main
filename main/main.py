@@ -4,6 +4,7 @@
 import argparse
 import os
 import sys
+from haversine import haversine
 from reader_second import reader_second
 from locator_second import locator_second
 from mapper import mapper
@@ -28,14 +29,20 @@ def check() -> None:
 def main() -> None:
     """Main module"""
     check()
+    i = 1
     try:
         chords = (float(args.latitude), float(args.longtitude))
+        i = 2
+        haversine((float(args.latitude), float(args.longtitude)), (10, 10))
     except ValueError:
-        sys.exit("Wrong input!")
+        output = "Wrong input!" if i == 1 else "Wrong coordinates!"
+        sys.exit(output)
     print("Reading file with films...")
     films = reader_second(args.path_to_file, int(args.year))
-    print(f"""Founded {len(films)} different films
+    print(f"""Found {len(films)} different films
 Checking location of films...""")
+    if len(films) == 0:
+        sys.exit(f"No films found of year {args.year}")
     locs = locator_second(films, chords)
     print("Creating map...")
     mapper(locs, chords, int(args.year))
@@ -44,4 +51,3 @@ Checking location of films...""")
 
 if __name__ == "__main__":
     main()
-
