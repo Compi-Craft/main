@@ -1,18 +1,24 @@
 """Searches for chords"""
 
 
-import os
 from typing import List
 from haversine import haversine
 from geopy.geocoders import Nominatim
-import reader_second
 
 
 geolocator = Nominatim(user_agent="compicraft")
 
 
 def locator_second(films: List[tuple], start_point: tuple[str]) -> List[tuple]:
-    """Finds chords for films"""
+    """Finds chords for films
+    >>> locator_second([('"1001 Things You Should Know"', ['Glasgow', 'Scotland', 'UK'])],\
+(49.83826, 24.02324))
+    [('"1001 Things You Should Know"', ((55.8606182, -4.2497933), 1996.4736575513823), \
+'Glasgow, Glasgow City, Alba / Scotland, G2 1DY, United Kingdom')]
+    >>> locator_second([('"100 Bullets D\\'Argento"', ['Rome', 'Lazio', 'Italy'])], \
+(49.83826, 24.02324))
+    [('"100 Bullets D\\'Argento"', ((41.8933203, 12.4829321), 1253.859790905856), \
+'Roma, Roma Capitale, Lazio, Italia')]"""
     films_lst = []
     checked_locs = []
     cont = 1
@@ -39,8 +45,5 @@ def locator_second(films: List[tuple], start_point: tuple[str]) -> List[tuple]:
 
 
 if __name__ == "__main__":
-    os.chdir("D:/PythonProjects/course 1/semester 2/Lab1/task2/project_lab_1_task_2")
-    all_films = reader_second.reader_second("locations.list", "2000")
-    locs = locator_second(all_films, (39, -114))
-    print(locs)
-    print(len(locs))
+    import doctest
+    print(doctest.testmod())

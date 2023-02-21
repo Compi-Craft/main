@@ -1,10 +1,8 @@
 """Puts all films location on map as well as start point"""
 
-import os
+
 from typing import List
 import folium
-from locator_second import locator_second
-from reader_second import reader_second
 
 
 def mapper(loc_lst: List[tuple], start_point, film_year: int) -> None:
@@ -37,12 +35,3 @@ def mapper(loc_lst: List[tuple], start_point, film_year: int) -> None:
     map_films.add_child(layer_all)
     map_films.add_child(folium.LayerControl())
     map_films.save("film_map.html")
-
-
-if __name__ == "__main__":
-    os.chdir("D:/PythonProjects/course 1/semester 2/Lab1/task2/")
-    start = (39, -114)
-    films = reader_second("locations.list", "2016")
-    locs = locator_second(films, start)
-    mapper(locs, start, 2000)
-    

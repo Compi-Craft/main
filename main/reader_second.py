@@ -1,7 +1,6 @@
 """Second version of list file reader"""
 
 
-import os
 from typing import List
 from random import shuffle
 
@@ -23,16 +22,22 @@ def reader_second(path_to_file: str, wanted_year: int) -> List[tuple]:
                 if "\t" in splitet[1]:
                     splitet[1] = splitet[1][:splitet[1].index("\t")]
                 info = separator(splitet)
-                if info is not False:
-                    if info[2] == str(wanted_year) and info[0] not in used_films:
-                        used_films.append(info[0])
-                        lst.append(info[:2])
+                if info is not False and info[2] == str(wanted_year) and info[0] not in used_films:
+                    used_films.append(info[0])
+                    lst.append(info[:2])
     shuffle(lst)
     return lst
 
 
 def separator(pure_info: List[str]) -> List[tuple]:
-    """Seperates data correctly"""
+    """Seperates data correctly
+    >>> separator(['"Den anden verden" (2016)', 'Nyborg Slot, Nyborg, Fyn, Denmark'])
+    ('"Den anden verden"', ['Nyborg Slot', 'Nyborg', 'Fyn', 'Denmark'], '2016')
+    >>> separator(['"1002 Momentos de la tele" (2012) {(#2.9)}',\
+'Buenos Aires, Federal District, Argentina\\n'])
+    ('"1002 Momentos de la tele"', ['Buenos Aires', 'Federal District', 'Argentina'], '2012') 
+    """
+    # print(pure_info)
     name_year = pure_info[0]
     locs = pure_info[1]
     if "{" in name_year:
@@ -56,6 +61,5 @@ def separator(pure_info: List[str]) -> List[tuple]:
 
 
 if __name__ == "__main__":
-    os.chdir("D:/PythonProjects/course 1/semester 2/Lab1/task2/")
-    films = reader_second("locations.list", 2001)
-    print(len(films))
+    import doctest
+    print(doctest.testmod())
